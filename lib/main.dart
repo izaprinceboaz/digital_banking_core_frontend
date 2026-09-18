@@ -10,13 +10,28 @@ class DigitalBankingCore extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          leading: Image.asset('assets/M.png'),
-          title: Text('Meridian'),
-        ),
-        body: Text(
-          'Digital Banking Core'
+      home: Scaffold( 
+        body: Center(
+          child: Column(
+            children: [
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(height: 200,),
+                  Image.asset(
+                    'assets/M.png',
+                    width: 35,
+                    height: 35,
+                  ),
+                  const SizedBox(width: 8,),
+                  const Text('Meridian')
+                ],
+              ),
+              // Container(
+
+              // )
+            ],
+          ),
         ),
       ),
     );
