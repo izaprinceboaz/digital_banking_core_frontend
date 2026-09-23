@@ -1,3 +1,4 @@
+import 'package:digital_banking_core_frontend/screens/sign_in.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,30 +11,7 @@ class DigitalBankingCore extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold( 
-        body: Center(
-          child: Column(
-            children: [
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const SizedBox(height: 200,),
-                  Image.asset(
-                    'assets/M.png',
-                    width: 35,
-                    height: 35,
-                  ),
-                  const SizedBox(width: 8,),
-                  const Text('Meridian')
-                ],
-              ),
-              // Container(
-
-              // )
-            ],
-          ),
-        ),
-      ),
+      home: SignIn(),
     );
   }
 }
