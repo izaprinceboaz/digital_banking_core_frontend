@@ -1,8 +1,8 @@
-import 'package:digital_banking_core_frontend/screens/sign_up.dart';
+import 'package:digital_banking_core_frontend/screens/sign_in.dart';
 import 'package:flutter/material.dart';
 
-class SignIn extends StatelessWidget {
-  const SignIn({super.key});
+class SignUp extends StatelessWidget {
+  const SignUp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,15 +32,42 @@ class SignIn extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    const Text('Sign In'),
+                    const Text('Sign Up'),
                     const SizedBox(height: 20,),
+                    TextField(
+                      decoration: const InputDecoration(
+                        labelText: 'First Name',
+                        border: OutlineInputBorder(),
+                      ),
+                      keyboardType: TextInputType.name,
+                      onChanged: (value) => {print('First Name : $value')},
+                    ),
+                    const SizedBox(height: 20),
+                    TextField(
+                      decoration: const InputDecoration(
+                        labelText: 'Last Name',
+                        border: OutlineInputBorder(),
+                      ),
+                      keyboardType: TextInputType.name,
+                      onChanged: (value) => {print('Last Name : $value')},
+                    ),
+                    const SizedBox(height: 20),
+                    TextField(
+                      decoration: const InputDecoration(
+                        labelText: 'Phone Number',
+                        border: OutlineInputBorder(),
+                      ),
+                      keyboardType: TextInputType.phone,
+                      onChanged: (value) => {print('Phone Number : $value')},
+                    ),
+                    const SizedBox(height: 20),
                     TextField(
                       decoration: const InputDecoration(
                         labelText: 'Email',
                         border: OutlineInputBorder(),
                       ),
                       keyboardType: TextInputType.emailAddress,
-                      onChanged: (value) => {print("Email : $value")},
+                      onChanged: (value) => {print('Email : $value')},
                     ),
                     const SizedBox(height: 10),
                     TextField(
@@ -67,7 +94,7 @@ class SignIn extends StatelessWidget {
                         minimumSize: const Size(double.infinity, 50),
                       ),
                       child: const Text(
-                        'Sign In',
+                        'Sign Up',
                         // style: ,
                       ),
                     ),
@@ -75,19 +102,19 @@ class SignIn extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text('New to Meridian?'),
+                        const Text('Already have an account?'),
                         TextButton(
                           onPressed: () {
                             Navigator.pushNamed(
                               context, 
-                              '/sign-up'
+                              '/sign-in'
                             );
                           }, 
                           style: TextButton.styleFrom(
                             overlayColor: Colors.black.withOpacity(0.05),
                           ),
                           child: const Text(
-                            'Create an account.',
+                            'Sign In.',
                             style: TextStyle(
                               color: Colors.black,
                             ),
@@ -99,7 +126,7 @@ class SignIn extends StatelessWidget {
                 ),
               ),
             ),
-            const Text("Meridian"),
+            const Text('Meridian'),
           ],
         ),
       ),

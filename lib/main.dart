@@ -1,4 +1,5 @@
 import 'package:digital_banking_core_frontend/screens/sign_in.dart';
+import 'package:digital_banking_core_frontend/screens/sign_up.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,7 +12,11 @@ class DigitalBankingCore extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: SignIn(),
+      initialRoute: '/sign-in',
+      routes: {
+        '/sign-in' : (context) => const SignIn(),
+        '/sign-up' :(context) => const SignUp(),
+      },
     );
   }
 }
