@@ -1,4 +1,3 @@
-import 'package:digital_banking_core_frontend/screens/sign_up.dart';
 import 'package:flutter/material.dart';
 
 class SignIn extends StatelessWidget {
@@ -6,7 +5,10 @@ class SignIn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+  final ColorScheme = Theme.of(context).colorScheme;
+  
     return Scaffold(
+      backgroundColor: ColorScheme.surface,
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,

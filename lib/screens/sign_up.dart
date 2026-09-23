@@ -6,7 +6,9 @@ class SignUp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ColorScheme = Theme.of(context).colorScheme;
     return Scaffold(
+      backgroundColor: ColorScheme.surface,
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,

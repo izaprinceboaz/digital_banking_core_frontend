@@ -12,10 +12,15 @@ class DigitalBankingCore extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        colorScheme: const ColorScheme.light(
+          surface: Colors.white,
+        ),
+      ),
       initialRoute: '/sign-in',
       routes: {
-        '/sign-in' : (context) => const SignIn(),
-        '/sign-up' :(context) => const SignUp(),
+        '/sign-in': (context) => const SignIn(),
+        '/sign-up': (context) => const SignUp(),
       },
     );
   }
