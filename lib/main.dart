@@ -1,3 +1,5 @@
+import 'package:digital_banking_core_frontend/screens/accounts.dart';
+import 'package:digital_banking_core_frontend/screens/dashboard.dart';
 import 'package:digital_banking_core_frontend/screens/sign_in.dart';
 import 'package:digital_banking_core_frontend/screens/sign_up.dart';
 import 'package:flutter/material.dart';
@@ -14,13 +16,15 @@ class DigitalBankingCore extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         colorScheme: const ColorScheme.light(
-          surface: Colors.white,
+          surface: Color.fromARGB(255, 244, 245, 246)
         ),
       ),
       initialRoute: '/sign-in',
       routes: {
         '/sign-in': (context) => const SignIn(),
         '/sign-up': (context) => const SignUp(),
+        '/dashboard': (context) => const Dashboard(), 
+        '/accounts':(context) => const Accounts(),
       },
     );
   }

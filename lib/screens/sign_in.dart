@@ -26,6 +26,7 @@ class SignIn extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
                     // color: theme.colorScheme.primary,
@@ -57,7 +58,7 @@ class SignIn extends StatelessWidget {
                     const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () => {
-                        print('object')
+                        Navigator.pushReplacementNamed(context, '/dashboard')
                       }, 
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.black,
@@ -80,7 +81,7 @@ class SignIn extends StatelessWidget {
                         const Text('New to Meridian?'),
                         TextButton(
                           onPressed: () {
-                            Navigator.pushNamed(
+                            Navigator.pushReplacementNamed(
                               context, 
                               '/sign-up'
                             );

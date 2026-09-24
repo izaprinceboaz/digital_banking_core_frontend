@@ -1,4 +1,3 @@
-import 'package:digital_banking_core_frontend/screens/sign_in.dart';
 import 'package:flutter/material.dart';
 
 class SignUp extends StatelessWidget {
@@ -26,6 +25,7 @@ class SignUp extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
                     // color: theme.colorScheme.primary,
@@ -84,7 +84,7 @@ class SignUp extends StatelessWidget {
                     const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () => {
-                        print('object')
+                        Navigator.pushReplacementNamed(context, '/dashboard')
                       }, 
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.black,
@@ -107,7 +107,7 @@ class SignUp extends StatelessWidget {
                         const Text('Already have an account?'),
                         TextButton(
                           onPressed: () {
-                            Navigator.pushNamed(
+                            Navigator.pushReplacementNamed(
                               context, 
                               '/sign-in'
                             );
