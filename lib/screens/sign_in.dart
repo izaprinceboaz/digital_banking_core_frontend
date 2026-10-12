@@ -1,12 +1,40 @@
+import 'package:digital_banking_core_frontend/network/network.dart';
 import 'package:flutter/material.dart';
 
-class SignIn extends StatelessWidget {
+class SignIn extends StatefulWidget {
   const SignIn({super.key});
+
+  @override
+  State<SignIn> createState() => _SignInState();
+}
+
+class _SignInState extends State<SignIn> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  Future<void> handleSignIn() async {
+    final data = await Network().SignIn(
+      email: emailController.text.trim(),
+      password: passwordController.text,
+    );
+
+    if (!mounted) return;   // the screen may have closed while waiting
+
+    if (data != null) {
+      await Network().saveSession(data);
+      if (!mounted) return;
+      Navigator.pushReplacementNamed(context, '/dashboard');
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Sign up failed. Try again.')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
   final ColorScheme = Theme.of(context).colorScheme;
-  
+
     return Scaffold(
       backgroundColor: ColorScheme.surface,
       body: Center(
@@ -38,28 +66,26 @@ class SignIn extends StatelessWidget {
                     const Text('Sign In'),
                     const SizedBox(height: 20,),
                     TextField(
+                      controller: emailController,
                       decoration: const InputDecoration(
                         labelText: 'Email',
                         border: OutlineInputBorder(),
                       ),
                       keyboardType: TextInputType.emailAddress,
-                      onChanged: (value) => {print("Email : $value")},
                     ),
                     const SizedBox(height: 10),
                     TextField(
+                      controller: passwordController,
                       decoration: const InputDecoration(
                         labelText: 'Password',
                         border: OutlineInputBorder(),
                       ),
                       keyboardType: TextInputType.visiblePassword,
                       obscureText: true,
-                      onChanged: (value) => {print('Password: $value')},
                     ),
                     const SizedBox(height: 20),
                     ElevatedButton(
-                      onPressed: () => {
-                        Navigator.pushReplacementNamed(context, '/dashboard')
-                      }, 
+                      onPressed: handleSignIn,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.black,
                         foregroundColor: Colors.white,
@@ -82,10 +108,10 @@ class SignIn extends StatelessWidget {
                         TextButton(
                           onPressed: () {
                             Navigator.pushReplacementNamed(
-                              context, 
+                              context,
                               '/sign-up'
                             );
-                          }, 
+                          },
                           style: TextButton.styleFrom(
                             overlayColor: Colors.black.withOpacity(0.05),
                           ),

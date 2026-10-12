@@ -1,7 +1,42 @@
+import 'package:digital_banking_core_frontend/network/network.dart';
 import 'package:flutter/material.dart';
 
-class SignUp extends StatelessWidget {
+class SignUp extends StatefulWidget {
   const SignUp({super.key});
+
+  @override
+  State<SignUp> createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> {
+
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
+  final phoneController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  Future<void> handleSignUp() async {
+    final data = await Network().RegisterUser(
+      firstName: firstNameController.text.trim(),
+      lastName: lastNameController.text.trim(),
+      email: emailController.text.trim(),
+      phoneNumber: phoneController.text.trim(),
+      password: passwordController.text,
+    );
+
+    if (!mounted) return;   // the screen may have closed while waiting
+
+    if (data != null) {
+      await Network().saveSession(data);        // <-- new
+      if (!mounted) return;                     // <-- new (we awaited again)
+      Navigator.pushReplacementNamed(context, '/dashboard');
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Sign up failed. Try again.')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,55 +72,53 @@ class SignUp extends StatelessWidget {
                     const Text('Sign Up'),
                     const SizedBox(height: 20,),
                     TextField(
+                      controller: firstNameController,
                       decoration: const InputDecoration(
                         labelText: 'First Name',
                         border: OutlineInputBorder(),
                       ),
                       keyboardType: TextInputType.name,
-                      onChanged: (value) => {print('First Name : $value')},
                     ),
                     const SizedBox(height: 20),
                     TextField(
+                      controller: lastNameController,
                       decoration: const InputDecoration(
                         labelText: 'Last Name',
                         border: OutlineInputBorder(),
                       ),
                       keyboardType: TextInputType.name,
-                      onChanged: (value) => {print('Last Name : $value')},
                     ),
                     const SizedBox(height: 20),
                     TextField(
+                      controller: phoneController,
                       decoration: const InputDecoration(
                         labelText: 'Phone Number',
                         border: OutlineInputBorder(),
                       ),
                       keyboardType: TextInputType.phone,
-                      onChanged: (value) => {print('Phone Number : $value')},
                     ),
                     const SizedBox(height: 20),
                     TextField(
+                      controller: emailController,
                       decoration: const InputDecoration(
                         labelText: 'Email',
                         border: OutlineInputBorder(),
                       ),
                       keyboardType: TextInputType.emailAddress,
-                      onChanged: (value) => {print('Email : $value')},
                     ),
                     const SizedBox(height: 10),
                     TextField(
+                      controller: passwordController,
                       decoration: const InputDecoration(
                         labelText: 'Password',
                         border: OutlineInputBorder(),
                       ),
                       keyboardType: TextInputType.visiblePassword,
                       obscureText: true,
-                      onChanged: (value) => {print('Password: $value')},
                     ),
                     const SizedBox(height: 20),
                     ElevatedButton(
-                      onPressed: () => {
-                        Navigator.pushReplacementNamed(context, '/dashboard')
-                      }, 
+                      onPressed: handleSignUp,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.black,
                         foregroundColor: Colors.white,
@@ -108,10 +141,10 @@ class SignUp extends StatelessWidget {
                         TextButton(
                           onPressed: () {
                             Navigator.pushReplacementNamed(
-                              context, 
+                              context,
                               '/sign-in'
                             );
-                          }, 
+                          },
                           style: TextButton.styleFrom(
                             overlayColor: Colors.black.withOpacity(0.05),
                           ),

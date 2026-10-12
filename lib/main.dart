@@ -1,15 +1,20 @@
+import 'package:digital_banking_core_frontend/network/network.dart';
 import 'package:digital_banking_core_frontend/screens/accounts.dart';
 import 'package:digital_banking_core_frontend/screens/dashboard.dart';
 import 'package:digital_banking_core_frontend/screens/sign_in.dart';
 import 'package:digital_banking_core_frontend/screens/sign_up.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const DigitalBankingCore());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final token = await Network().getToken();
+  runApp(DigitalBankingCore(signedIn: token != null));
 }
 
 class DigitalBankingCore extends StatelessWidget {
-  const DigitalBankingCore({super.key});
+  final bool signedIn;
+  const DigitalBankingCore({super.key, required this.signedIn});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +24,7 @@ class DigitalBankingCore extends StatelessWidget {
           surface: Color.fromARGB(255, 244, 245, 246)
         ),
       ),
-      initialRoute: '/sign-in',
+      initialRoute: signedIn ? '/dashboard' : '/sign-in',
       routes: {
         '/sign-in': (context) => const SignIn(),
         '/sign-up': (context) => const SignUp(),

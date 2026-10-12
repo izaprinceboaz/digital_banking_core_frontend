@@ -1,3 +1,4 @@
+import 'package:digital_banking_core_frontend/network/network.dart';
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatelessWidget {
@@ -14,6 +15,7 @@ class Dashboard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text('Here is Your Account Details'),
+          // ListView.builder(itemBuilder: itemBuilder)
           Row(
             children: [
               const Text('No Accounts yet'),
@@ -64,7 +66,9 @@ class Dashboard extends StatelessWidget {
           const Spacer(),
           Center(
             child: ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
+                await Network().clearSession();
+                if (!context.mounted) return;
                 Navigator.pushReplacementNamed(context, '/sign-in');
               }, 
               child: const Text('Log out')
