@@ -2,7 +2,9 @@ import 'package:digital_banking_core_frontend/network/network.dart';
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatelessWidget {
-  const Dashboard({super.key});
+  final void Function(int index) onTabChange;
+
+  const Dashboard({super.key, required this.onTabChange});
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +23,8 @@ class Dashboard extends StatelessWidget {
               const Text('No Accounts yet'),
               TextButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/accounts');
-                }, 
+                  onTabChange(1);   // Accounts tab
+                },
                 child: const Text('Open one')
               ),
             ]
@@ -46,14 +48,9 @@ class Dashboard extends StatelessWidget {
                       const Text('Recent Transactions'),
                       TextButton(
                         onPressed: () {
-                          print('See all Transaction');
-                        }, 
-                        child: TextButton(
-                            onPressed: () {
-                              Navigator.pushReplacementNamed(context, '/transaction');
-                            },
-                            child: const Text('See All')
-                        )
+                          onTabChange(2);   // Transaction tab
+                        },
+                        child: const Text('See All')
                       )
                     ]
                   ),

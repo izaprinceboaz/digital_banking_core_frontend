@@ -15,19 +15,26 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
 
-  final List<Widget>   _screen = [
-    const Dashboard(),
-    const Accounts(),
-    const Transaction(),
-    const Saving()
-  ];
+  void changeTab(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final List<Widget> screens = [
+      Dashboard(onTabChange: changeTab),
+      const Accounts(),
+      const Transaction(),
+      const Saving()
+    ];
+
     return  Scaffold(
       appBar: AppBar(
         title: const Text('Meridian'),
       ),
-      body: _screen[_currentIndex],
+      body: screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         currentIndex: _currentIndex,
@@ -51,11 +58,7 @@ class _HomePageState extends State<HomePage> {
         ],
         selectedItemColor: Theme.of(context).colorScheme.onPrimary,
         unselectedItemColor: Theme.of(context).colorScheme.onSurface,
-        onTap: (value) {
-          setState(() {
-            _currentIndex = value;
-          });
-        },
+        onTap: changeTab,
       ),
     );
   }

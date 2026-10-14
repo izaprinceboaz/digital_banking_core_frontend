@@ -1,3 +1,4 @@
+import 'package:digital_banking_core_frontend/network/network.dart';
 import 'package:flutter/material.dart';
 
 class Transaction extends StatefulWidget {
@@ -8,11 +9,52 @@ class Transaction extends StatefulWidget {
 }
 
 class _TransactionState extends State<Transaction> {
+  List<dynamic> transactions = [];
+  bool loading = true;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loadTransactions();
+  }
+  Future<void> loadTransactions() async {
+    final data = await Network().getTransactionHistory('ACC-20000009');
+
+    if(!mounted) return;
+
+    setState(() {
+      transactions = data ?? [];
+      loading = false;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Transaction'),
+      ),
+      body: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                children: [
+                  if(loading)
+                    const CircularProgressIndicator()
+                  else if(transactions.isEmpty)
+                    const Text('No transactions')
+                  else
+                    for(final transaction in transactions)
+                      ListTile(
+                        title: Text('Description: ${transaction['description']}'),
+                        subtitle: Text('Status: ${transaction['status']}'),
+                        trailing: Text('${transaction['amount']} ${transaction['currency']}'),
+                      )
+                ],
+              )
+            ],
+          )
       ),
     );
   }

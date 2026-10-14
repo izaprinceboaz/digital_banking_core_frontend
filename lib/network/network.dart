@@ -115,4 +115,28 @@ class Network {
        print('Error: $e');
      }
    }
+
+   Future<List<dynamic>?> getTransactionHistory(String accountNumber) async {
+     var url = Uri.parse('$_baseUrl/transactions/my-transactions/$accountNumber');
+     var token = await getToken();
+     try  {
+       var response = await http.get(
+         url,
+         headers: {
+           'Content-Type': 'application/json',
+           'Authorization': 'Bearer $token',
+         }
+       );
+
+       if (response.statusCode == 200) {
+         print(response.body);
+         return json.decode(response.body);
+       } else {
+         print('Error ${response.statusCode}: ${response.body}');
+         return null;
+       }
+     } catch(e) {
+       print('Error: $e');
+     }
+   }
 }
