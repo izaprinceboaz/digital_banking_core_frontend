@@ -23,7 +23,7 @@ class _SignInState extends State<SignIn> {
     if (data != null) {
       await Network().saveSession(data);
       if (!mounted) return;
-      Navigator.pushReplacementNamed(context, '/dashboard');
+      Navigator.pushReplacementNamed(context, '/homepage');
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Sign up failed. Try again.')),

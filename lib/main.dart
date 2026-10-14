@@ -1,6 +1,7 @@
 import 'package:digital_banking_core_frontend/network/network.dart';
 import 'package:digital_banking_core_frontend/screens/accounts.dart';
 import 'package:digital_banking_core_frontend/screens/dashboard.dart';
+import 'package:digital_banking_core_frontend/screens/home_page.dart';
 import 'package:digital_banking_core_frontend/screens/sign_in.dart';
 import 'package:digital_banking_core_frontend/screens/sign_up.dart';
 import 'package:flutter/foundation.dart';
@@ -24,12 +25,13 @@ class DigitalBankingCore extends StatelessWidget {
           surface: Color.fromARGB(255, 244, 245, 246)
         ),
       ),
-      initialRoute: signedIn ? '/dashboard' : '/sign-in',
+      initialRoute: signedIn ? '/homepage' : '/sign-in',
       routes: {
         '/sign-in': (context) => const SignIn(),
         '/sign-up': (context) => const SignUp(),
-        '/dashboard': (context) => const Dashboard(), 
-        '/accounts':(context) => const Accounts(),
+        // '/dashboard': (context) => const Dashboard(),
+        // '/accounts':(context) => const Accounts(),
+        '/homepage':(context) => const HomePage()
       },
     );
   }
