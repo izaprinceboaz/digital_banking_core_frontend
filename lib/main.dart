@@ -2,8 +2,10 @@ import 'package:digital_banking_core_frontend/network/network.dart';
 import 'package:digital_banking_core_frontend/screens/accounts.dart';
 import 'package:digital_banking_core_frontend/screens/dashboard.dart';
 import 'package:digital_banking_core_frontend/screens/home_page.dart';
+import 'package:digital_banking_core_frontend/screens/saving.dart';
 import 'package:digital_banking_core_frontend/screens/sign_in.dart';
 import 'package:digital_banking_core_frontend/screens/sign_up.dart';
+import 'package:digital_banking_core_frontend/screens/transaction.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -29,9 +31,11 @@ class DigitalBankingCore extends StatelessWidget {
       routes: {
         '/sign-in': (context) => const SignIn(),
         '/sign-up': (context) => const SignUp(),
-        // '/dashboard': (context) => const Dashboard(),
-        // '/accounts':(context) => const Accounts(),
-        '/homepage':(context) => const HomePage()
+        '/dashboard': (context) => const Dashboard(),
+        '/accounts':(context) => const Accounts(),
+        '/homepage':(context) => const HomePage(),
+        '/saving':(context) => const Saving(),
+        '/transaction':(context) => const Transaction()
       },
     );
   }

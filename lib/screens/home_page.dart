@@ -1,3 +1,5 @@
+import 'package:digital_banking_core_frontend/screens/saving.dart';
+import 'package:digital_banking_core_frontend/screens/transaction.dart';
 import 'package:flutter/material.dart';
 
 import 'accounts.dart';
@@ -15,7 +17,9 @@ class _HomePageState extends State<HomePage> {
 
   final List<Widget>   _screen = [
     const Dashboard(),
-    const Accounts()
+    const Accounts(),
+    const Transaction(),
+    const Saving()
   ];
   @override
   Widget build(BuildContext context) {
@@ -35,6 +39,14 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             icon : Icon(Icons.credit_card),
             label: 'Account'
+          ),
+          BottomNavigationBarItem(
+              icon : Icon(Icons.currency_exchange),
+              label: 'Transaction'
+          ),
+          BottomNavigationBarItem(
+              icon : Icon(Icons.savings),
+              label: 'Saving'
           ),
         ],
         selectedItemColor: Theme.of(context).colorScheme.onPrimary,

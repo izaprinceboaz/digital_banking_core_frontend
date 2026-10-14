@@ -9,7 +9,7 @@ class Dashboard extends StatelessWidget {
     return  Scaffold(
       appBar: AppBar(
         // automaticallyImplyLeading: false,
-        title: const Text('Welcome Back'),        
+        title: const Text('Good Morning'),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -21,7 +21,7 @@ class Dashboard extends StatelessWidget {
               const Text('No Accounts yet'),
               TextButton(
                 onPressed: () {
-                  Navigator.pushReplacementNamed(context, '/accounts');
+                  Navigator.pushNamed(context, '/accounts');
                 }, 
                 child: const Text('Open one')
               ),
@@ -48,7 +48,12 @@ class Dashboard extends StatelessWidget {
                         onPressed: () {
                           print('See all Transaction');
                         }, 
-                        child: const Text('See all')
+                        child: TextButton(
+                            onPressed: () {
+                              Navigator.pushReplacementNamed(context, '/transaction');
+                            },
+                            child: const Text('See All')
+                        )
                       )
                     ]
                   ),
@@ -56,12 +61,6 @@ class Dashboard extends StatelessWidget {
                 ],
               ),
             ),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, '/sign-in');
-            }, 
-            child: const Text('Log Out')
           ),
           const Spacer(),
           Center(
