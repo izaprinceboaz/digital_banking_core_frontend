@@ -1,3 +1,4 @@
+import 'package:digital_banking_core_frontend/Components/transaction_list.dart';
 import 'package:digital_banking_core_frontend/network/network.dart';
 import 'package:flutter/material.dart';
 
@@ -34,27 +35,8 @@ class _TransactionState extends State<Transaction> {
       appBar: AppBar(
         title: const Text('Transaction'),
       ),
-      body: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Column(
-                children: [
-                  if(loading)
-                    const CircularProgressIndicator()
-                  else if(transactions.isEmpty)
-                    const Text('No transactions')
-                  else
-                    for(final transaction in transactions)
-                      ListTile(
-                        title: Text('Description: ${transaction['description']}'),
-                        subtitle: Text('Status: ${transaction['status']}'),
-                        trailing: Text('${transaction['amount']} ${transaction['currency']}'),
-                      )
-                ],
-              )
-            ],
-          )
+      body: SingleChildScrollView(
+          child: TransactionList(loading: loading, transactions: transactions)
       ),
     );
   }

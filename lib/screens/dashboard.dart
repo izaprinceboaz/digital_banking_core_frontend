@@ -1,4 +1,5 @@
-import 'package:digital_banking_core_frontend/network/network.dart';
+import 'package:digital_banking_core_frontend/Components/logout_button.dart';
+import 'package:digital_banking_core_frontend/Components/tab_exchange_button.dart';
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatelessWidget {
@@ -21,12 +22,7 @@ class Dashboard extends StatelessWidget {
           Row(
             children: [
               const Text('No Accounts yet'),
-              TextButton(
-                onPressed: () {
-                  onTabChange(1);   // Accounts tab
-                },
-                child: const Text('Open one')
-              ),
+              TabExchangeButton(onTabChange: onTabChange, tabNumber: 1,text: 'Open one',)
             ]
           ),
           Padding(
@@ -46,12 +42,7 @@ class Dashboard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text('Recent Transactions'),
-                      TextButton(
-                        onPressed: () {
-                          onTabChange(2);   // Transaction tab
-                        },
-                        child: const Text('See All')
-                      )
+                      TabExchangeButton(onTabChange: onTabChange, tabNumber: 2,text: 'See All',)
                     ]
                   ),
                   const Text('No transaction yet.')
@@ -60,15 +51,8 @@ class Dashboard extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          Center(
-            child: ElevatedButton(
-              onPressed: () async {
-                await Network().clearSession();
-                if (!context.mounted) return;
-                Navigator.pushReplacementNamed(context, '/sign-in');
-              }, 
-              child: const Text('Log out')
-            ),
+          const Center(
+            child: LogOutButton(),
           )
         ],
       ),
