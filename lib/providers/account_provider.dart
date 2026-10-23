@@ -1,4 +1,4 @@
-import 'package:digital_banking_core_frontend/network/network.dart';
+import 'package:digital_banking_core_frontend/network/Accounts/accounts.dart';
 import 'package:flutter/material.dart';
 
 class AccountProvider extends ChangeNotifier {
@@ -12,7 +12,7 @@ class AccountProvider extends ChangeNotifier {
     _loading = true;
     notifyListeners();
 
-    final data = await Network().getMyAccounts();
+    final data = await Accounts().getMyAccounts();
     _accounts = data ?? [];
     _loading = false;
     notifyListeners();

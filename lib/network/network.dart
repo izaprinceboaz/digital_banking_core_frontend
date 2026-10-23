@@ -28,115 +28,113 @@ class Network {
     await prefs.remove('user');
   }
 
-   Future<Map<String, dynamic>?> RegisterUser( {
-     required String firstName,
-     required String lastName,
-     required String email,
-     required String phoneNumber,
-     required String password,
-   }) async {
-     var url = Uri.parse('$_baseUrl/auth/register');
+   Future<dynamic> getRequest(String endpoint) async {
 
-     try{
-       var response = await http.post(
-         url,
-         headers: {'Content-Type': 'application/json'},
-         body: jsonEncode({
-           'firstName': firstName,
-           'lastName': lastName,
-           'email': email,
-           'phoneNumber': phoneNumber,
-           'passwordHash': password,
-         }),
-       );
-
-       if (response.statusCode == 200 || response.statusCode == 201) {
-         var data = json.decode(response.body);
-         return data;
-       } else {
-         print('Error ${response.statusCode}: ${response.body}');
-         return null;
-       }
-     } catch(e) {
-       print('Error: $e');
-     }
-
-   }
-
-   Future<Map<String, dynamic>?> SignIn({
-     required String email,
-     required String password,
-   }) async {
-     var url = Uri.parse('$_baseUrl/auth/login');
+     var url = Uri.parse('$_baseUrl$endpoint');
+     var token = await getToken();
 
      try {
-       var response = await http.post(
+       var response = await http.get(
            url,
-           headers: {'Content-Type': 'application/json'},
-           body: jsonEncode({
-             'email': email,
-             'passwordHash': password
-           })
+           headers: {
+             'Content-Type': 'application/json',
+             'Authorization': 'Bearer $token',
+           }
        );
 
+       if (response.statusCode == 200) {
+         return json.decode(response.body);
+       } else {
+         print('Error ${response.statusCode}: ${response.body}');
+         return null;
+       }
+     } catch(e) {
+       print('Error: $e');
+       return null;
+     }
+   }
+
+   Future<dynamic> postRequest({
+     required dynamic body,
+     required String endpoint,
+   }) async {
+
+     var url = Uri.parse('$_baseUrl$endpoint');
+     var token = Network().getToken();
+
+     try {
+       var response = await http.post(
+         url,
+         headers: {
+           'Content-Type': 'application/json',
+           if (token != null ) 'Authorizarion' : 'Bearer $token'
+         },
+         body: jsonEncode(body),
+       );
        if (response.statusCode == 200 || response.statusCode == 201) {
          var data = json.decode(response.body);
-         print(data);
          return data;
        } else {
          print('Error ${response.statusCode}: ${response.body}');
          return null;
        }
      } catch(e) {
-       print('Error: $e');
+      print('Error: $e');
+      return null;
      }
    }
 
-   Future<List<dynamic>?> getMyAccounts() async {
-     var url = Uri.parse('$_baseUrl/accounts/my-accounts');
+   Future<dynamic> patchRequest({
+     required dynamic body,
+     required String endpoint,
+   }) async {
+
+     var url = Uri.parse('$_baseUrl$endpoint');
+     var token = Network().getToken();
+
+     try {
+       var response = await http.patch(
+         url,
+         headers: {
+           'Content-Type': 'application/json',
+           if (token != null ) 'Authorizarion' : 'Bearer $token'
+         },
+         body: body == null ? null : jsonEncode(body),
+       );
+       if (response.statusCode == 200 || response.statusCode == 201) {
+         return response.body.isEmpty ? true : json.decode(response.body);
+       } else {
+         print('Error ${response.statusCode}: ${response.body}');
+         return null;
+       }
+     } catch(e) {
+       print('Error: $e');
+       return null;
+     }
+   }
+
+   Future<dynamic> deleteRequest(String endpoint) async {
+     var url = Uri.parse('$_baseUrl$endpoint');
      var token = await getToken();
 
      try {
-       var response = await http.get(
+       var response = await http.delete(
          url,
          headers: {
            'Content-Type': 'application/json',
-           'Authorization': 'Bearer $token',
-         }
+           if (token != null) 'Authorization': 'Bearer $token',
+         },
        );
 
-       if (response.statusCode == 200) {
-         return json.decode(response.body);
+       if (response.statusCode == 200 || response.statusCode == 204) {
+         return response.body.isEmpty ? true : json.decode(response.body);
        } else {
          print('Error ${response.statusCode}: ${response.body}');
          return null;
        }
-     } catch(e) {
+     } catch (e) {
        print('Error: $e');
-     }
-   }
-
-   Future<List<dynamic>?> getTransactionHistory(String accountNumber) async {
-     var url = Uri.parse('$_baseUrl/transactions/my-transactions/$accountNumber');
-     var token = await getToken();
-     try  {
-       var response = await http.get(
-         url,
-         headers: {
-           'Content-Type': 'application/json',
-           'Authorization': 'Bearer $token',
-         }
-       );
-
-       if (response.statusCode == 200) {
-         print(response.body);
-         return json.decode(response.body);
-       } else {
-         print('Error ${response.statusCode}: ${response.body}');
-         return null;
-       }
-     } catch(e) {
-       print('Error: $e');
+       return null;
      }
    }
 }

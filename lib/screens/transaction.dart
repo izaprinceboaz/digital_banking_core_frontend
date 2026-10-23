@@ -1,4 +1,5 @@
 import 'package:digital_banking_core_frontend/Components/transaction_list.dart';
+import 'package:digital_banking_core_frontend/network/Transactions/transactions.dart';
 import 'package:digital_banking_core_frontend/network/network.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,7 @@ class _TransactionState extends State<Transaction> {
     loadTransactions();
   }
   Future<void> loadTransactions() async {
-    final data = await Network().getTransactionHistory('ACC-20000009');
+    final data = await Transactions().getTransactionHistory('ACC-20000009');
 
     if(!mounted) return;
 

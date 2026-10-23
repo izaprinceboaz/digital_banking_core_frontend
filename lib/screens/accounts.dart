@@ -14,8 +14,11 @@ class _AccountsState extends State<Accounts> {
 
   @override
   void initState() {
-    Provider.of<AccountProvider>(context,listen:false).loadAccounts(context);
+    // Provider.of<AccountProvider>(context,listen:false).loadAccounts(context);
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<AccountProvider>(context, listen: false).loadAccounts(context);
+    });
   }
 
   @override

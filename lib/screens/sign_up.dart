@@ -1,3 +1,4 @@
+import 'package:digital_banking_core_frontend/network/Auth/auth.dart';
 import 'package:digital_banking_core_frontend/network/network.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,7 @@ class _SignUpState extends State<SignUp> {
   final passwordController = TextEditingController();
 
   Future<void> handleSignUp() async {
-    final data = await Network().RegisterUser(
+    final data = await Auth().RegisterUser(
       firstName: firstNameController.text.trim(),
       lastName: lastNameController.text.trim(),
       email: emailController.text.trim(),

@@ -1,3 +1,4 @@
+import 'package:digital_banking_core_frontend/network/Auth/auth.dart';
 import 'package:digital_banking_core_frontend/network/network.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,7 @@ class _SignInState extends State<SignIn> {
   final passwordController = TextEditingController();
 
   Future<void> handleSignIn() async {
-    final data = await Network().SignIn(
+    final data = await Auth().SignIn(
       email: emailController.text.trim(),
       password: passwordController.text,
     );
