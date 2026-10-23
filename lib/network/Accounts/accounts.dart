@@ -13,18 +13,18 @@ class Accounts {
     return null;
   }
 
-  Future<dynamic?> getAccount({
+  Future<Map<String, dynamic>?> getAccount({
     required String accountNumber
   }) async {
     var response = await _network.getRequest('/accounts/$accountNumber');
 
     if (response != null) {
-      return response as dynamic;
+      return response as Map<String, dynamic>;
     }
     return null;
   }
 
-  Future<dynamic?> createAccount({
+  Future<Map<String, dynamic>?> createAccount({
     required String accountType,
     required String currency,
     required num balance,
@@ -39,21 +39,21 @@ class Accounts {
         body: body, endpoint: '/accounts/create');
 
     if (response != null) {
-      return response as dynamic;
+      return response as Map<String, dynamic>;
     }
     return null;
   }
 
-  Future<dynamic?> updateBalance({
+  Future<Map<String, dynamic>?> updateBalance({
     required String accountNumber,
-    required BigInt newBalance,
+    required num newBalance,
   }) async {
 
     var response = await _network.postRequest(
         body: newBalance, endpoint: '/accounts/$accountNumber/update-balance');
 
     if (response != null) {
-      return response as dynamic;
+      return response as Map<String, dynamic>;
     }
     return null;
   }
@@ -62,7 +62,7 @@ class Accounts {
     required String accountNumber
   }) async {
 
-    var response = await _network.getRequest('statements/my-statements/$accountNumber');
+    var response = await _network.getRequest('/statements/my-statements/$accountNumber');
 
     if ( response != null ) {
       return response as List<dynamic>;
@@ -71,7 +71,7 @@ class Accounts {
   }
 
 
-  Future<dynamic?> debit({
+  Future<Map<String, dynamic>?> debit({
     required String accountNumber,
     required num amount,
     required String description,
@@ -84,16 +84,16 @@ class Accounts {
 
     var response = await _network.postRequest(
         body: body,
-        endpoint: 'accounts/$accountNumber/debit'
+        endpoint: '/accounts/$accountNumber/debit'
     );
 
     if ( response != null ) {
-      return response as dynamic;
+      return response as Map<String, dynamic>;
     }
     return null;
   }
 
-  Future<dynamic?> credit({
+  Future<Map<String, dynamic>?> credit({
     required String accountNumber,
     required num amount,
     required String description,
@@ -106,11 +106,11 @@ class Accounts {
 
     var response = await _network.postRequest(
         body: body,
-        endpoint: 'accounts/$accountNumber/credit'
+        endpoint: '/accounts/$accountNumber/credit'
     );
 
     if ( response != null ) {
-      return response as dynamic;
+      return response as Map<String, dynamic>;
     }
     return null;
   }
@@ -123,7 +123,8 @@ class Accounts {
     
     var response = await _network.patchRequest(
         body: status,
-        endpoint: '/accounts/$accountNumber/status'
+        endpoint: '/accounts/$accountNumber/status',
+        plainText: true
     );
 
     if ( response != null ) {

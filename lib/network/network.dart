@@ -60,14 +60,14 @@ class Network {
    }) async {
 
      var url = Uri.parse('$_baseUrl$endpoint');
-     var token = Network().getToken();
+     var token = await getToken();
 
      try {
        var response = await http.post(
          url,
          headers: {
            'Content-Type': 'application/json',
-           if (token != null ) 'Authorizarion' : 'Bearer $token'
+           if (token != null ) 'Authorization' : 'Bearer $token'
          },
          body: jsonEncode(body),
        );
@@ -87,10 +87,11 @@ class Network {
    Future<dynamic> patchRequest({
      required dynamic body,
      required String endpoint,
+     bool plainText = false,
    }) async {
 
      var url = Uri.parse('$_baseUrl$endpoint');
-     var token = Network().getToken();
+     var token = await getToken();
 
      try {
        var response = await http.patch(
@@ -101,8 +102,8 @@ class Network {
          },
          body: body == null ? null : jsonEncode(body),
        );
-       if (response.statusCode == 200 || response.statusCode == 201) {
-         return response.body.isEmpty ? true : json.decode(response.body);
+       if (response.statusCode == 200 || response.statusCode == 204) {
+         return response.body.isEmpty ? true :  (plainText ? body.toString() : jsonEncode(body));
        } else {
          print('Error ${response.statusCode}: ${response.body}');
          return null;
@@ -133,6 +134,36 @@ class Network {
          return null;
        }
      } catch (e) {
+       print('Error: $e');
+       return null;
+     }
+   }
+
+   Future<dynamic> putRequest({
+     required dynamic body,
+     required String endpoint,
+   }) async {
+
+     var url = Uri.parse('$_baseUrl$endpoint');
+     var token = await getToken();
+
+     try {
+       var response = await http.put(
+         url,
+         headers: {
+           'Content-Type': 'application/json',
+           if (token != null ) 'Authorization' : 'Bearer $token'
+         },
+         body: jsonEncode(body),
+       );
+       if (response.statusCode == 200 || response.statusCode == 201) {
+         var data = json.decode(response.body);
+         return data;
+       } else {
+         print('Error ${response.statusCode}: ${response.body}');
+         return null;
+       }
+     } catch(e) {
        print('Error: $e');
        return null;
      }
