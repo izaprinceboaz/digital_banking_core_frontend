@@ -1,6 +1,3 @@
-
-import 'dart:convert';
-
 import 'package:digital_banking_core_frontend/network/network.dart';
 
 class Auth {
@@ -51,5 +48,34 @@ class Auth {
     }
 
     return null;
+  }
+
+  Future<bool> logout() async {
+
+    var refreshToken = await _network.getRefreshToken();
+    if (refreshToken == null) return false;
+
+    var body = {
+      'refreshToken': refreshToken,
+    };
+
+    var response = await _network.postRequest(body: body, endpoint: '/auth/logout');
+
+    return response != null;
+  }
+
+  Future<bool> updatePassword({
+    required String currentPassword,
+    required String newPassword,
+  }) async {
+
+    var body = {
+      'currentPassword': currentPassword,
+      'newPassword': newPassword,
+    };
+
+    var response = await _network.postRequest(body: body, endpoint: '/auth/update-password');
+
+    return response != null;
   }
 }

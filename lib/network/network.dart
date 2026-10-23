@@ -20,6 +20,11 @@ class Network {
     return prefs.getString('accessToken');
   }
 
+  Future<String?> getRefreshToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('refreshToken');
+  }
+
 
   Future<void> clearSession() async {
     final prefs = await SharedPreferences.getInstance();
@@ -72,8 +77,7 @@ class Network {
          body: jsonEncode(body),
        );
        if (response.statusCode == 200 || response.statusCode == 201) {
-         var data = json.decode(response.body);
-         return data;
+         return response.body.isEmpty ? true : json.decode(response.body);
        } else {
          print('Error ${response.statusCode}: ${response.body}');
          return null;
@@ -85,7 +89,7 @@ class Network {
    }
 
    Future<dynamic> patchRequest({
-     required dynamic body,
+     dynamic body,
      required String endpoint,
      bool plainText = false,
    }) async {
@@ -97,13 +101,13 @@ class Network {
        var response = await http.patch(
          url,
          headers: {
-           'Content-Type': 'application/json',
-           if (token != null ) 'Authorizarion' : 'Bearer $token'
+           'Content-Type': plainText ? 'text/plain' : 'application/json',
+           if (token != null ) 'Authorization' : 'Bearer $token'
          },
-         body: body == null ? null : jsonEncode(body),
+         body: body == null ? null : (plainText ? body.toString() : jsonEncode(body)),
        );
        if (response.statusCode == 200 || response.statusCode == 204) {
-         return response.body.isEmpty ? true :  (plainText ? body.toString() : jsonEncode(body));
+         return response.body.isEmpty ? true : json.decode(response.body);
        } else {
          print('Error ${response.statusCode}: ${response.body}');
          return null;
@@ -157,8 +161,7 @@ class Network {
          body: jsonEncode(body),
        );
        if (response.statusCode == 200 || response.statusCode == 201) {
-         var data = json.decode(response.body);
-         return data;
+         return response.body.isEmpty ? true : json.decode(response.body);
        } else {
          print('Error ${response.statusCode}: ${response.body}');
          return null;
